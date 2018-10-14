@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('../font/roboto/Roboto-Bold.eot');
+}
+
+/* use the font */
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+#main-div {
+    background-image: url('https://uoguelph-mlrg.github.io/images/ml_background.png');
+    height: 100vh;
+    width: 100vw;
+}
