@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block head %}{% endblock %}
+{% block nav %}{% endblock %}
+{% block main %}
+<div id="main-div" class="container-fluid" style="height: 100vh;width: 100vw;">
+    <div class="container h-100">
+        <div class="row h-100 justify-content-center align-items-center">
+            <div class="col-md-8">
+                <h1 class="text-white font-weight-bold">PES Elective Registration</h1>
+                <blockquote class="blockquote text-white">
+                    <p class="font-italic">Each man is capable of doing one thing well. If he attempts several, he
+                        will fail to achieve
+                        distinction in any.</p>
+                    <footer class="blockquote-footer ">Plato</footer>
+                </blockquote>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="/action_page.php">
+                            <div class="form-group">
+                                <label for="usn">USN</label>
+                                <input type="text" class="form-control" id="usn" placeholder="Enter USN" name="usn">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                            </div>
+                            <div class="form-group">
+                                <label for="pwd">Password:</label>
+                                <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
+                            </div>
+                            <div class="form-group form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" name="remember"> Remember me
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <a href="#">Forgot Password?</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="navbar fixed-bottom text-white">
+            <p>Copyright © PES University, Bengaluru, India.</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
