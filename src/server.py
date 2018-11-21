@@ -123,8 +123,36 @@ def elective():
 
 @app.route('/getElectives')
 def getElectives():
-    data = [{'c_id': 'UE15CS401', 'c_name': 'OOMD', 'sem': 7, 'pool': 1, 'prerequisite':['Java', 'Python']}, {'c_id': 'UE15CS402', 'c_name': 'OOMD', 'sem': 7, 'pool': 1, 'prerequisite':['Java', 'Python']}, {'c_id': 'UE15CS403', 'c_name': 'OOMD', 'sem': 7, 'pool': 1, 'prerequisite':['Java', 'Python']}, {'c_id': 'UE15CS404', 'c_name': 'OOMD', 'sem': 7, 'pool': 1, 'prerequisite':['Java', 'Python']}, {'c_id': 'UE15CS405', 'c_name': 'OOMD', 'sem': 7, 'pool': 1, 'prerequisite':['Java', 'Python']}, {'c_id': 'UE15CS406', 'c_name': 'OOMD', 'sem': 7, 'pool': 1, 'prerequisite':['Java', 'Python']}]
-    return json.dumps(data)
+    cursor = db.cursor()
+    sql = "SELECT c_id from course where elective = 1;"
+    # semester = 5;
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    cursor.close()
+    data = [row[0] for row in results]
+    details = []
+    for x in data:
+        details.append(getSubjectDetails(x))
+    print(details)
+    return json.dumps(details)    
+
+def getSubjectDetails(S_Id):
+    cursor = db.cursor()
+    sql = "SELECT c_id, c_name, sem, pool from course where c_id = %s;"
+    cursor.execute(sql,S_Id)
+    desc = cursor.description
+    sub = cursor.fetchall()
+    sub1 = list(sub[0])
+    column_names = ['c_id','c_name','sem','pool','pre-reqs']
+    sql = "SELECT p_id from c_p_map where c_id = %s;"
+    cursor.execute(sql,S_Id)
+    pre_req = cursor.fetchall()
+    pre = [x[0] for x in pre_req]
+    sub1.append(pre)
+    data = dict(zip(column_names, sub1))
+    cursor.close()
+    # print(data)
+    return data
 
 @app.route('/getRecommendation')
 def getRecommendation():

@@ -85,11 +85,11 @@
                 var new_id = cdata[k]["c_name"].replace(" ", "-");
 
                 var preq;
-
-                if (cdata[k]["prerequisite"].length > 0)
-                    preq = cdata[k]["prerequisite"][0];
-                for (j = 1; j < cdata[k]["prerequisite"].length; j++)
-                    preq = preq + ',' + cdata[k]["prerequisite"][j];
+                
+                if (cdata[k]["pre-reqs"].length > 0)
+                    preq = cdata[k]["pre-reqs"][0];
+                for (j = 1; j < cdata[k]["pre-reqs"].length; j++)
+                    preq = preq + ',' + cdata[k]["pre-reqs"][j];
 
                 $("#full-list").append('<div id="' + new_id +
                     '" class="card bg-primary"><div class="card-header text-center">' +
@@ -100,16 +100,14 @@
                     '<p class="card-text"><b>Pool: </b>' + cdata[k]["pool"] + '</p>' +
                     '<p class="card-text"><b>Prerequisites: </b>' + preq + '</p></div></div>');
             }
-        }
-    });
-
-    $.ajax({
+            $.ajax({
         url: '/getRecommendation',
         success: function (response) {
             clist = JSON.parse(response);
             $("#e1_reco").html('');
             $("#e2_reco").html('');
-            console.log(clist);
+            console.log('This is my list'+clist);
+            console.log('This is my cdata'+cdata);
             var data = [];
             for (i = 0; i < clist.length; i++) {
                 for (j = 0; j < cdata.length; j++) {
@@ -119,37 +117,43 @@
                 }
             }
 
-            console.log(data);
+            console.log('This is my data: '+data);
+
+            if(data.length<6) {return}
 
             for (i = 0; i < 3; i++) {
                 console.log(data[i]);
-                var prerequisite;
-                if (data[i]["prerequisite"].length > 0)
-                    prerequisite = data[i]["prerequisite"][0];
-                for (j = 1; j < data[i]["prerequisite"].length; j++)
-                    prerequisite = prerequisite + ',' + data[i]["prerequisite"][j];
-                console.log(prerequisite);
+                var prereqs;
+                if (data[i]["pre-reqs"].length > 0)
+                    prereqs = data[i]["pre-reqs"][0];
+                for (j = 1; j < data[i]["pre-reqs"].length; j++)
+                    prereqs = prereqs + ',' + data[i]["pre-reqs"][j];
+                console.log(prereqs);
                 $("#e1_reco").append('<div class="card bg-primary"><div class="card-header text-center">' +
                     '<p class="card-text">' + data[i]["c_name"] +
                     '</p></div><div class="card-body bg-light text-center">' +
                     '<p class="card-text"><b>Subject Code: </b>' + data[i]["c_id"] + '</p>' +
-                    '<p class="card-text"><b>Prerequisites: </b>' + prerequisite + '</p></div></div>');
+                    '<p class="card-text"><b>Prerequisites: </b>' + prereqs + '</p></div></div>');
             }
             for (i = 3; i < 6; i++) {
                 console.log(data[i]);
-                var prerequisite;
-                if (data[i]["prerequisite"].length > 0)
-                    prerequisite = data[i]["prerequisite"][0];
-                for (j = 1; j < data[i]["prerequisite"].length; j++)
-                    prerequisite = prerequisite + ',' + data[i]["prerequisite"][j];
-                console.log(prerequisite);
+                var prereqs;
+                if (data[i]["pre-reqs"].length > 0)
+                    prereqs = data[i]["pre-reqs"][0];
+                for (j = 1; j < data[i]["pre-reqs"].length; j++)
+                    prereqs = prereqs + ',' + data[i]["pre-reqs"][j];
+                console.log(prereqs);
                 $("#e2_reco").append('<div class="card bg-primary"><div class="card-header text-center">' +
                     '<p class="card-text">' + data[i]["c_name"] +
                     '</p></div><div class="card-body bg-light text-center">' +
                     '<p class="card-text"><b>Subject Code: </b>' + data[i]["c_id"] + '</p>' +
-                    '<p class="card-text"><b>Prerequisites: </b>' + prerequisite + '</p></div></div>');
+                    '<p class="card-text"><b>pre-reqss: </b>' + prereqs + '</p></div></div>');
             }
         }
     });
+        }
+    });
+
+    
 </script>
 {% endblock %}
