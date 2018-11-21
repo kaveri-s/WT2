@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block head %}{% endblock %}
-{% block nav %}{% endblock %}
+{% block nav %}{%endblock%}
 {% block main %}
 <div id="main-div" class="container-fluid" style="height: 100vh;width: 100vw;">
     <div class="container h-100">
@@ -15,28 +15,33 @@
                 </blockquote>
             </div>
             <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <form action="/action_page.php">
+                <div class="card" ng-app="notesApp">
+                    <div class="card-body" ng-controller="MainCtrl as ctrl">
+                        <form ng-submit="ctrl.submit()" name="myForm">
                             <div class="form-group">
                                 <label for="usn">USN</label>
-                                <input type="text" class="form-control" id="usn" placeholder="Enter USN" name="usn">
+                                <input type="text" class="form-control" id="usn" placeholder="Enter USN" name="usn"
+                                    ng-model="ctrl.user.usn" required ng-minlength="8" ng-maxlength="8">
+                                <span style="color:red" ng-show="myForm.usn.$dirty && myForm.usn.$invalid">
+                                    Username must be 8 characters
+                                </span>
                             </div>
                             <div class="form-group">
                                 <label for="email">Email:</label>
-                                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email"
+                                    ng-model="ctrl.user.email" required>
                             </div>
                             <div class="form-group">
                                 <label for="pwd">Password:</label>
-                                <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
+                                <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd"
+                                    ng-model="ctrl.user.password" required>
+                                
                             </div>
-                            <div class="form-group form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" name="remember"> Remember me
-                                </label>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                            <a href="#">Forgot Password?</a>
+                            <span id="error" style="color:red"></span>
+                            <span style="color:red" ng-show="myForm.$invalid">
+                                All fields are required
+                            </span>
+                            <button type="submit" class="btn btn-primary" ng-disabled="myForm.$invalid">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -49,4 +54,30 @@
     </div>
 </div>
 
+{% endblock %}
+{% block script %}
+<script>
+    angular.module('notesApp', [])
+        .controller("MainCtrl", ["$http",
+            function ($http) {
+                var self = this
+                self.submit = function () {
+                    $http.post("/validate", self.user).then(
+                        function (response) {
+                            console.log(response);
+                            if(response.data == "Correct")
+                                window.location.href = "/profile";
+                            else if(response.data == "Wrong")
+                                document.getElementById('error').innerHTML = "Details are Wrong";
+                            else
+                                document.getElementById('error').innerHTML = "User not Registered";
+                        },
+                        function (err) {
+                            alert(err);
+                        }
+                    )
+                }
+            }]);
+
+</script>
 {% endblock %}

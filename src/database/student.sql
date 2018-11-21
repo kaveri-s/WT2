@@ -1,0 +1,11 @@
+insert into student values ("14ECS100","tom",1814362502,"tom@gmail.com","tom");
+insert into student values ("15ECS101","dick",9434147034,"dick@gmail.com","dick");
+insert into student values ("16ECS102","lina",4917323712,"lina@gmail.com","lina");
+insert into student values ("14ECS103","eva",3715610279,"eva@gmail.com","eva");
+insert into student values ("15ECS104","karthik",9915782354,"karthik@gmail.com","karthik");
+insert into student values ("16ECS105","kaveri",1663867706,"kaveri@gmail.com","kaveri");
+insert into student values ("14ECS106","himanshu",9547251729,"himanshu@gmail.com","himanshu");
+insert into student values ("15ECS107","medusa",6218424702,"medusa@gmail.com","medusa");
+insert into student values ("16ECS108","huskar",7318008149,"huskar@gmail.com","huskar");
+insert into student values ("14ECS109","luna",1358382239,"luna@gmail.com","luna");
+insert into student values ("15ECS110","broodmother",1826612050,"broodmother@gmail.com","broodmother");

@@ -26,17 +26,65 @@ def index():
     print(request.method)
     return render_template('index.html')
 
+@app.route('/validate',methods=['POST'])
+def validate():
+    data = json.loads(request.data)
+    usn = data["usn"]
+    email = data["email"]
+    pswd = data["password"]
+
+    cursor = db.cursor()
+    sql = "SELECT s_id, s_name, s_email, s_password from student where s_id = %s and s_email = %s"
+    args = ([usn, email])
+    cursor.execute(sql,args)
+    results = cursor.fetchall()
+    cursor.close()
+    print(results)
+    if results:
+        row = results[0]
+
+        if(row[3] == pswd):
+            # do session stuff
+            session.clear()
+            session['s_id'] = row[0]
+            session['s_name'] = row[1]
+            return "Correct"
+        else:
+            # wrong password, tell user
+            session.clear()
+            return "Wrong"
+    # If we still reach here, it means that the user is not a registered one
+    return "Missing"
+
+
 @app.route('/profile')
 def profile():
     '''This function renders the index page of the EventManagement site'''
-    print(request.method)
-    return render_template('profile.html')
+
+    return render_template('profile.html', name = "Kaveri")
+
+@app.route('/getCourses')
+def getcourses():
+    cursor = db.cursor()
+    sql = "SELECT c_id, c_name, sem from course where c_id in (select c_id from s_c_map where s_id = %s)"
+    args = ([session['s_id']])
+    cursor.execute(sql,args)
+    results = cursor.fetchall()
+    cursor.close()
+    print(results)
+    data = json.dumps(results)
+    # If we still reach here, it means that the user is not a registered one
+    return data
 
 @app.route('/elective')
 def elective():
     '''This function renders the index page of the EventManagement site'''
     print(request.method)
     return render_template('elective.html')
+
+@app.route('/logout')
+def logout():
+    return render_template('index.html')
 
 # @app.route('/checkemail',methods = ['POST','GET'])
 # def check_email():
