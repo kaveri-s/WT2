@@ -121,6 +121,17 @@ def elective():
     else:
         return render_template('index.html')
 
+@app.route('/getElectives')
+def getElectives():
+    data = [{'c_id': 'UE15CS401', 'c_name': 'OOMD', 'sem': 7, 'pool': 1, 'prerequisite':['Java', 'Python']}, {'c_id': 'UE15CS402', 'c_name': 'OOMD', 'sem': 7, 'pool': 1, 'prerequisite':['Java', 'Python']}, {'c_id': 'UE15CS403', 'c_name': 'OOMD', 'sem': 7, 'pool': 1, 'prerequisite':['Java', 'Python']}, {'c_id': 'UE15CS404', 'c_name': 'OOMD', 'sem': 7, 'pool': 1, 'prerequisite':['Java', 'Python']}, {'c_id': 'UE15CS405', 'c_name': 'OOMD', 'sem': 7, 'pool': 1, 'prerequisite':['Java', 'Python']}, {'c_id': 'UE15CS406', 'c_name': 'OOMD', 'sem': 7, 'pool': 1, 'prerequisite':['Java', 'Python']}]
+    return json.dumps(data)
+
+@app.route('/getRecommendation')
+def getRecommendation():
+    data = [{'c_id': 'UE15CS401'}, {'c_id': 'UE15CS402'}, {'c_id': 'UE15CS403'},{'c_id': 'UE15CS404'}, {'c_id': 'UE15CS405'}, {'c_id': 'UE15CS406'}]
+    return json.dumps(data)
+
+
 if __name__ == '__main__':
 # run!
     app.run(debug=True)

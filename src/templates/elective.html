@@ -17,31 +17,8 @@
     }
     .card-columns > div {
         margin: 1vh;
+        color: white;
     }
-    .card{
-        outline: 3px solid darkblue;
-    }
-    .card-header{
-        outline: 3px solid darkblue;
-    }
-    #circle {
-        transform: translate(-50%,-50%);
-        width: 150px;
-        height: 150px;  
-    }
-
-    .loader {
-        width: calc(100% - 0px);
-        height: calc(100% - 0px);
-        border: 8px solid #162534;
-        border-top: 8px solid #09f;
-        border-radius: 50%;
-        animation: rotate 5s linear infinite;
-    }
-
-    @keyframes rotate {
-    100% {transform: rotate(360deg);}
-    } 
 </style>
 {% endblock %}
 {% block head %}{% endblock %}
@@ -53,104 +30,15 @@
 <div class="container">
     <div>
         <div>
-            <h2 id="el_1_recommend">Elective 1 Recommendation</h2>
-            <div class="card-columns">
-                <div class="card bg-primary">
-                    <div class="card-header text-center">
-                        <p class="card-text">Recommendation Score : <span id="r_percent"></span></p>
-                    </div>
-                    <div class="card-body bg-light text-center">
-                        <p class="card-text">Subject Name : <span id="s_name"></span></p>
-                        <p class="card-text">Subject Code : <span id="s_id"></span></p>
-                        <p class="card-text">Teacher : <span id="s_teacher"></span></p>
-                        <p></p>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">SEE
-                            MORE </button>
-                    </div>
-                    <div class="card-footer text-center">
-                    </div>
-                </div>
-                <div class="card bg-primary">
-                    <div class="card-header text-center">
-                        <p class="card-text">Recommendation Score : <span id="r_percent"></span></p>
-                    </div>
-                    <div class="card-body bg-light text-center">
-                        <p class="card-text">Subject Namw : <span id="s_name"></span></p>
-                        <p class="card-text">Subject Code : <span id="s_id"></span></p>
-                        <p class="card-text">Teacher : <span id="s_teacher"></span></p>
-                        <p></p>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">SEE
-                            MORE </button>
-                    </div>
-                    <div class="card-footer text-center">
-                    </div>
-                </div>
-                <div class="card bg-primary">
-                    <div class="card-header text-center">
-                        <p class="card-text">Recommendation Score : <span id="r_percent"></span></p>
-                    </div>
-                    <div class="card-body bg-light text-center">
-                        <p class="card-text">Subject Namw : <span id="s_name"></span></p>
-                        <p class="card-text">Subject Code : <span id="s_id"></span></p>
-                        <p class="card-text">Teacher : <span id="s_teacher"></span></p>
-                        <p></p>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">SEE
-                            MORE </button>
-                    </div>
-                    <div class="card-footer text-center">
-                    </div>
-                </div>
+            <h2>Elective 1 Recommendation</h2>
+            <div id="e1_reco" class="card-columns">
+
             </div>
         </div>
         <div>
-            <h2 id="el_2_recommend">Elective 2 Recommendation</h2>
-            <div class="card-columns">
-                <div class="card bg-danger">
-                    <div class="card-header text-center">
-                        <p class="card-text">Recommendation Score : <span id="r_percent"></span></p>
-                    </div>
-                    <div class="card-body bg-light text-center">
-                        <p class="card-text">Subject Namw : <span id="s_name"></span></p>
-                        <p class="card-text">Subject Code : <span id="s_id"></span></p>
-                        <p class="card-text">Teacher : <span id="s_teacher"></span></p>
-                        <p></p>
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">SEE
-                            MORE </button>
-                    </div>
-                    <div class="card-footer text-center">
-                    </div>
-                </div>
-                <div class="card bg-danger">
-                    <div class="card-header text-center">
-                        <p class="card-text">Recommendation Score : <span id="r_percent"></span></p>
-                    </div>
-                    <div class="card-body bg-light text-center">
-                        <p class="card-text">Subject Namw : <span id="s_name"></span></p>
-                        <p class="card-text">Subject Code : <span id="s_id"></span></p>
-                        <p class="card-text">Teacher : <span id="s_teacher"></span></p>
-                        <p></p>
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">SEE
-                            MORE </button>
-                    </div>
-                    <div class="card-footer text-center">
-                    </div>
-                </div>
-                <div class="card bg-danger">
-                    <div class="card-header text-center">
-                        <p class="card-text">Recommendation Score : <span id="r_percent"></span></p>
-                    </div>
-                    <div class="card-body bg-light text-center">
-                        <p class="card-text">Subject Namw : <span id="s_name"></span></p>
-                        <p class="card-text">Subject Code : <span id="s_id"></span></p>
-                        <p class="card-text">Teacher : <span id="s_teacher"></span></p>
-                        <p></p>
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">SEE
-                            MORE </button>
-                    </div>
-                    <div class="card-footer text-center">
-                    </div>
+            <h2>Elective 2 Recommendation</h2>
+            <div id="e2_reco" class="card-columns">
 
-                </div>
             </div>
         </div>
     </div>
@@ -158,19 +46,20 @@
 
     <hr class="border-light">
     <!--Search Bar-->
-    <div id="search">
-        <div class="form-group mb-3 mt-5">
+    <div id="search" class="container mb-5">
+        <div class="form-group mb-3 mt-5 mb-5">
             <input type="text" class="form-control" placeholder="Search">
             <button class="btn btn-success float-right" type="submit">Go</button>
         </div>
     </div>
 
-    <!--Elective List-->
-    <div>
-        <div id="sem5" class="mt-5 text-white">
-            
-        </div>
+    <div class="m-5 p-3"></div>
 
+    <!--Elective List-->
+    <div class="mt-5 container">
+        <div id="full-list" class="text-white card-columns">
+
+        </div>
     </div>
 </div>
 
@@ -183,7 +72,84 @@
 
 {% endblock %}
 {% block script%}
+
 <script>
-    
+    var cdata;
+
+    $.ajax({
+        url: '/getElectives',
+        success: function (response) {
+            cdata = JSON.parse(response);
+            console.log(cdata);
+            for (k = 0; k < cdata.length; k++) {
+                var new_id = cdata[k]["c_name"].replace(" ", "-");
+
+                var preq;
+
+                if (cdata[k]["prerequisite"].length > 0)
+                    preq = cdata[k]["prerequisite"][0];
+                for (j = 1; j < cdata[k]["prerequisite"].length; j++)
+                    preq = preq + ',' + cdata[k]["prerequisite"][j];
+
+                $("#full-list").append('<div id="' + new_id +
+                    '" class="card bg-primary"><div class="card-header text-center">' +
+                    '<p class="card-text">' + cdata[k]["c_name"] +
+                    '</p></div><div class="card-body bg-light text-center">' +
+                    '<p class="card-text"><b>Subject Code: </b>' + cdata[k]["c_id"] + '</p>' +
+                    '<p class="card-text"><b>Semester: </b>' + cdata[k]["sem"] + '</p>' +
+                    '<p class="card-text"><b>Pool: </b>' + cdata[k]["pool"] + '</p>' +
+                    '<p class="card-text"><b>Prerequisites: </b>' + preq + '</p></div></div>');
+            }
+        }
+    });
+
+    $.ajax({
+        url: '/getRecommendation',
+        success: function (response) {
+            clist = JSON.parse(response);
+            $("#e1_reco").html('');
+            $("#e2_reco").html('');
+            console.log(clist);
+            var data = [];
+            for (i = 0; i < clist.length; i++) {
+                for (j = 0; j < cdata.length; j++) {
+                    if (cdata[j]["c_id"] == clist[i]["c_id"]) {
+                        data.push(cdata[j]);
+                    }
+                }
+            }
+
+            console.log(data);
+
+            for (i = 0; i < 3; i++) {
+                console.log(data[i]);
+                var prerequisite;
+                if (data[i]["prerequisite"].length > 0)
+                    prerequisite = data[i]["prerequisite"][0];
+                for (j = 1; j < data[i]["prerequisite"].length; j++)
+                    prerequisite = prerequisite + ',' + data[i]["prerequisite"][j];
+                console.log(prerequisite);
+                $("#e1_reco").append('<div class="card bg-primary"><div class="card-header text-center">' +
+                    '<p class="card-text">' + data[i]["c_name"] +
+                    '</p></div><div class="card-body bg-light text-center">' +
+                    '<p class="card-text"><b>Subject Code: </b>' + data[i]["c_id"] + '</p>' +
+                    '<p class="card-text"><b>Prerequisites: </b>' + prerequisite + '</p></div></div>');
+            }
+            for (i = 3; i < 6; i++) {
+                console.log(data[i]);
+                var prerequisite;
+                if (data[i]["prerequisite"].length > 0)
+                    prerequisite = data[i]["prerequisite"][0];
+                for (j = 1; j < data[i]["prerequisite"].length; j++)
+                    prerequisite = prerequisite + ',' + data[i]["prerequisite"][j];
+                console.log(prerequisite);
+                $("#e2_reco").append('<div class="card bg-primary"><div class="card-header text-center">' +
+                    '<p class="card-text">' + data[i]["c_name"] +
+                    '</p></div><div class="card-body bg-light text-center">' +
+                    '<p class="card-text"><b>Subject Code: </b>' + data[i]["c_id"] + '</p>' +
+                    '<p class="card-text"><b>Prerequisites: </b>' + prerequisite + '</p></div></div>');
+            }
+        }
+    });
 </script>
 {% endblock %}
