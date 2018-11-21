@@ -69,12 +69,12 @@ def getcourses():
     sql = "SELECT c_id, c_name, sem from course where c_id in (select c_id from s_c_map where s_id = %s)"
     args = ([session['s_id']])
     cursor.execute(sql,args)
-    results = cursor.fetchall()
+    desc = cursor.description
+    column_names = [col[0] for col in desc]
+    data = [dict(zip(column_names, row)) for row in cursor.fetchall()]
     cursor.close()
-    print(results)
-    data = json.dumps(results)
-    # If we still reach here, it means that the user is not a registered one
-    return data
+    print(data)
+    return json.dumps(data)
 
 @app.route('/elective')
 def elective():
