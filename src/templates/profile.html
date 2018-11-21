@@ -26,7 +26,7 @@
         <!--Profile Picture with Menu-->
         <div id="profile" class="col-md-2 h-100 p-0 bg-dark">
             <div id="p-pic" class="card w-100 p-5" style="background:rgb(19, 24, 30);">
-                <img class="card-img-top rounded-circle mt-5" src="https://openclipart.org/download/216165/fb_stormshadow.svg"
+                <img class="card-img-top rounded-circle mt-5" src="../static/img/stormshadow.svg"
                     alt="Card image" style="width:100%">
                 <div class="card-body mx-auto">
                     <h4 class="card-text text-light font-weight-bold font-">John Doe</h4>
@@ -43,8 +43,9 @@
         </div>
 
 
-        <!--Courses-->
+
         <div class="col-md-10 h-100 p-3">
+            <!--Courses-->
             <div id="course" class="p-body card mt-5">
                 <div class="card-body mt-3">
                     <h3>Mandatory Courses</h3>
@@ -94,6 +95,7 @@
                     </table>
                 </div>
             </div>
+            <!--Course Info-->
 
             <!--Student Info-->
             <div id="stu-info" class="card mt-5 p-body">
@@ -146,6 +148,7 @@
                     </table>
                 </div>
             </div>
+            <!--Student Info-->
         </div>
 
     </div>
@@ -159,9 +162,8 @@
 
 {% block script %}
 <script>
-    $("#courses").show();
+    $("#course").show();
     $("#stu-info").hide();
-    $("#settings").hide();
     $.ajax({
         url: '/getCourses',
         success: function (response) {
@@ -174,14 +176,20 @@
             for (i = 0, len = data.length; i < len; i++) {
                 // console.log(data[i]);
                 if (data[i]["elective"] == 0)
-                    $("#core").append('<tr><td>' + data[i]["c_name"] + '</td><td>' + data[i]["c_id"] +
+                    $("#core").append('<tr><td>' + data[i]["c_name"] + '</td><td>' + data[i][
+                            "c_id"
+                        ] +
                         '</td></tr>');
                 else
-                    $("#elective").append('<tr><td>' + data[i]["c_name"] + '</td><td>' + data[i]["c_id"] +
+                    $("#elective").append('<tr><td>' + data[i]["c_name"] + '</td><td>' + data[i]
+                        ["c_id"] +
                         '</td></tr>');
             }
+
+
         }
     });
+
     $.ajax({
         url: '/getInfo',
         success: function (response) {
@@ -198,28 +206,28 @@
         }
     });
 
+
     $("#c").click(function () {
+        console.log('C event is getting fired');
         $("#course").show();
         $("#stu-info").hide();
-        $("#settings").hide();
-    });
+        console.log('This event is done');
+    }).delay(3000);
 
-    $("#browse-elective").click(function(){
-        window.location.href = 'elective'
+    $("#browse-elective").click(function () {
+        window.location.href = '/elective'
     });
 
     $("#i").click(function () {
+        console.log('I event is getting fired');
         $("#course").hide();
         $("#stu-info").show();
-        $("#settings").hide();
-    });
-    $("#s").click(function () {
-        $("#course").hide();
-        $("#stu-info").hide();
-        $("#settings").show();
     });
 
-    $('#l').click(function () {
+    $('#l').click(function (ev) {
+        console.log('L event is getting fired');
+        ev.preventDefault();
+        ev.stopPropagation();
         window.location.href = '/logout'
     });
 </script>

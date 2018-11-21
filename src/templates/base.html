@@ -28,7 +28,7 @@
             <img src="{{ url_for('static',filename = 'img/logoPesu.png')}}" alt="PES University">
             {% block nav %}
             <!-- Collapse button -->
-            <button  id="drop" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+            <button id="drop" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
                 aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -39,8 +39,8 @@
                     <button class="btn btn-light dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false" type="button" onclick=>Hi, {{name}}!</button>
                     <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                        <a id="#profile" class="dropdown-item" href="/profile">Profile</a>
-                        <a id="#logout" class="dropdown-item" href="/">Log Out</a>
+                        <a id="#prof" class="dropdown-item" href="/profile">Profile</a>
+                        <a id="#log" class="dropdown-item" href="/">Log Out</a>
                     </div>
                 </div>
             </div>
@@ -74,17 +74,16 @@
     <script type="text/javascript" src="{{ url_for('static',filename = 'js/mdb.min.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('static',filename = 'js/angular.min.js')}}"></script>
     <script>
-    $("#profile").click(function () {
-        window.location.href = 'profile'
-    });
-    $("#logout").click(function () {
-        window.location.href = 'logout'
-    });
-    
+        $("#prof").click(function (ev) {
+            console.log('Prof event fired');
+            window.location.href = '/profile'
+        });
+        $("#log").click(function (ev) {
+            console.log('Logout event fired');
+            window.location.href = '/logout'
+        });
     </script>
     {% block script %}{% endblock %}
 </body>
 
 </html>
-
-
