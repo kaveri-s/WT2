@@ -39,8 +39,8 @@
                     <button class="btn btn-light dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false" type="button" onclick=>Hi, {{name}}!</button>
                     <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="/profile">Profile</a>
-                        <a class="dropdown-item" href="/">Log Out</a>
+                        <a id="#profile" class="dropdown-item" href="/profile">Profile</a>
+                        <a id="#logout" class="dropdown-item" href="/">Log Out</a>
                     </div>
                 </div>
             </div>
@@ -73,7 +73,15 @@
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="{{ url_for('static',filename = 'js/mdb.min.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('static',filename = 'js/angular.min.js')}}"></script>
-
+    <script>
+    $("#profile").click(function () {
+        window.location.href = 'profile'
+    });
+    $("#logout").click(function () {
+        window.location.href = 'logout'
+    });
+    
+    </script>
     {% block script %}{% endblock %}
 </body>
 

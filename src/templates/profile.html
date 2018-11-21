@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block style %}
 <style>
-#p-pic {
+    #p-pic {
     background:rgb(19, 24, 30);
 }
 
@@ -20,215 +20,207 @@
 {% block head %}{% endblock %}
 {% block main %}
 <div id="main-div" class="container-fluid">
-        <div class="row h-100 justify-content-center align-items-start">
+    <div class="row h-100 justify-content-center align-items-start">
 
 
-            <!--Profile Picture with Menu-->
-            <div id="profile" class="col-md-2 h-100 p-0 bg-dark">
-                <div id="p-pic" class="card w-100 p-5" style="background:rgb(19, 24, 30);">
-                    <img class="card-img-top rounded-circle mt-5" src="https://openclipart.org/download/216165/fb_stormshadow.svg"
-                        alt="Card image" style="width:100%">
-                    <div class="card-body mx-auto">
-                        <h4 class="card-text text-light font-weight-bold font-">John Doe</h4>
-                    </div>
-                </div>
-
-                <div id="profile-menu">
-                    <ul class="list-group list-group-flush">
-                        <li id="c" class="list-group-item bg-dark text-white">Courses</li>
-                        <li id="i" class="list-group-item bg-light">Student Info</li>
-                        <li id="s" class="list-group-item bg-dark text-white">Settings</li>
-                        <li id="l" class="list-group-item bg-light">Logout</li>
-                    </ul>
+        <!--Profile Picture with Menu-->
+        <div id="profile" class="col-md-2 h-100 p-0 bg-dark">
+            <div id="p-pic" class="card w-100 p-5" style="background:rgb(19, 24, 30);">
+                <img class="card-img-top rounded-circle mt-5" src="https://openclipart.org/download/216165/fb_stormshadow.svg"
+                    alt="Card image" style="width:100%">
+                <div class="card-body mx-auto">
+                    <h4 class="card-text text-light font-weight-bold font-">John Doe</h4>
                 </div>
             </div>
 
-
-            <!--Courses-->
-            <div class="col-md-10 h-100 p-3">
-                <div id="course" class="p-body card mt-5">
-                    <div class="card-body mt-3">
-                        <h3>Mandatory Courses</h3>
-                        <hr>
-                        <table class="table table-dark table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Course</th>
-                                    <th>ID</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Object Oriented Modelling and Design</td>
-                                    <td>Core</td>
-                                </tr>
-                                <tr>
-                                    <td>Software Engineering</td>
-                                    <td>Core</td>
-                                </tr>
-                                <tr>
-                                    <td>Web Technology II</td>
-                                    <td>Core</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <h2 class="mt-5">Elective</h2>
-                        <button class="btn btn-dark" type="submit">Select Elective</button>
-                        <hr>
-                        <table class="table table-dark table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Course</th>
-                                    <th>ID</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Blockchain by BoardWalk</td>
-                                    <td>Elective</td>
-                                </tr>
-                                <tr>
-                                    <td>Social Networking Analysis</td>
-                                    <td>Elective</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!--Student Info-->
-                <div id="stu-info" class="card mt-5 p-body">
-                    <div class="card-body mt-3">
-                        <h3>Basic Info</h3>
-                        <hr>
-                        <table class="table table-borderless">
-                            <tbody>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Kaveri Subramaniam</td>
-                                </tr>
-                                <tr>
-                                    <td>USN</td>
-                                    <td>01FB15ECS146</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <h3>Contact Info</h3>
-                        <hr>
-                        <table class="table table-borderless">
-                            <tbody>
-                                <tr>
-                                    <td>Email</td>
-                                    <td>kaveri.subra@gmail.com</td>
-                                </tr>
-                                <tr>
-                                    <td>Mobile Number</td>
-                                    <td>9483869437</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <h3>Academic Info</h3>
-                        <hr>
-                        <table class="table table-borderless">
-                            <tbody>
-                                <tr>
-                                    <td>Year of Join</td>
-                                    <td>2015</td>
-                                </tr>
-                                <tr>
-                                    <td>Semester</td>
-                                    <td>7th</td>
-                                </tr>
-                                <tr>
-                                    <td>CGPA</td>
-                                    <td>8.57</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <div id="profile-menu">
+                <ul class="list-group list-group-flush">
+                    <li id="c" class="list-group-item bg-light">Courses</li>
+                    <li id="i" class="list-group-item bg-dark text-white">Student Info</li>
+                    <li id="l" class="list-group-item bg-light">Logout</li>
+                </ul>
+            </div>
+        </div>
 
 
-                <!--Settings-->
-                <div id="settings" class="card mt-5 p-body">
-                    <div class="card-body mt-3">
-                        <h3>Change Contact Info</h3>
-                        <hr>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text bg-dark text-white">Email Id</span>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Type new Email ID here">
-                            <div class="input-group-append">
-                                <button class="btn btn-dark" type="submit">Change</button>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text bg-dark text-white">Mobile No.</span>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Type new Mobile Number here">
-                            <div class="input-group-append">
-                                <button class="btn btn-dark" type="submit">Change</button>
-                            </div>
-                        </div>
-                        <br>
-                        <h3>Change Password</h3>
-                        <hr>
-                        <form action="/action_page.php">
-                            <div class="form-group">
-                                <label for="o-pass">Old Password</label>
-                                <input type="o-pass" class="form-control" id="o-pass">
-                            </div>
-                            <div class="form-group">
-                                <label for="pwd">New Password:</label>
-                                <input type="password" class="form-control" id="pwd">
-                            </div>
-                            <button type="submit" class="btn btn-dark">Submit</button>
-                        </form>
-                    </div>
+        <!--Courses-->
+        <div class="col-md-10 h-100 p-3">
+            <div id="course" class="p-body card mt-5">
+                <div class="card-body mt-3">
+                    <h3>Mandatory Courses</h3>
+                    <hr>
+                    <table class="table table-dark table-striped">
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>ID</th>
+                            </tr>
+                        </thead>
+                        <tbody id="core">
+                            <tr>
+                                <td>Object Oriented Modelling and Design</td>
+                                <td>Core</td>
+                            </tr>
+                            <tr>
+                                <td>Software Engineering</td>
+                                <td>Core</td>
+                            </tr>
+                            <tr>
+                                <td>Web Technology II</td>
+                                <td>Core</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h2 class="mt-5">Elective</h2>
+                    <button id="browse-elective" class="btn btn-dark" type="submit">Browse Elective</button>
+                    <hr>
+                    <table class="table table-dark table-striped">
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>ID</th>
+                            </tr>
+                        </thead>
+                        <tbody id="elective">
+                            <tr>
+                                <td>Blockchain by BoardWalk</td>
+                                <td>Elective</td>
+                            </tr>
+                            <tr>
+                                <td>Social Networking Analysis</td>
+                                <td>Elective</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
+            <!--Student Info-->
+            <div id="stu-info" class="card mt-5 p-body">
+                <div class="card-body mt-3">
+                    <h3>Basic Info</h3>
+                    <hr>
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <td>Name</td>
+                                <td id="s_name">Kaveri Subramaniam</td>
+                            </tr>
+                            <tr>
+                                <td>USN</td>
+                                <td id="s_id">01FB15ECS146</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h3>Contact Info</h3>
+                    <hr>
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <td>Email</td>
+                                <td id="s_email">kaveri.subra@gmail.com</td>
+                            </tr>
+                            <tr>
+                                <td>Mobile Number</td>
+                                <td id="s_phone">9483869437</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h3>Academic Info</h3>
+                    <hr>
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <td>Year of Join</td>
+                                <td id="s_year">2015</td>
+                            </tr>
+                            <tr>
+                                <td>Semester</td>
+                                <td id="s_sem">7th</td>
+                            </tr>
+                            <tr>
+                                <td>CGPA</td>
+                                <td id="s_gpa">8.57</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
-        <div class="navbar fixed-bottom text-white">
-            <p>Copyright © PES University, Bengaluru, India.</p>
-        </div>
     </div>
+
+    <div class="navbar fixed-bottom text-white">
+        <p>Copyright © PES University, Bengaluru, India.</p>
+    </div>
+</div>
 
 {% endblock %}
 
 {% block script %}
 <script>
-$.ajax({
-    url: '/getCourses',
-    success: function(response){
-        console.log(response.data);
-    }
+    $("#courses").show();
+    $("#stu-info").hide();
+    $("#settings").hide();
+    $.ajax({
+        url: '/getCourses',
+        success: function (response) {
+            data = JSON.parse(response);
+            // console.log(data);
+            // console.log(data[0]);
+            $("#core").html('');
+            $("#elective").html('');
+            $("#s_sem").text(data[0]["sem"] + 'th');
+            for (i = 0, len = data.length; i < len; i++) {
+                // console.log(data[i]);
+                if (data[i]["elective"] == 0)
+                    $("#core").append('<tr><td>' + data[i]["c_name"] + '</td><td>' + data[i]["c_id"] +
+                        '</td></tr>');
+                else
+                    $("#elective").append('<tr><td>' + data[i]["c_name"] + '</td><td>' + data[i]["c_id"] +
+                        '</td></tr>');
+            }
+        }
+    });
+    $.ajax({
+        url: '/getInfo',
+        success: function (response) {
+            data = JSON.parse(response);
+            console.log(data);
+            console.log(data[0]);
+            $("#s_name").text(data[0]["s_name"]);
+            $("#s_id").text(data[0]["s_id"]);
+            $("#s_email").text(data[0]["s_email"]);
+            $("#s_phone").text(data[0]["s_phone"]);
+            $("#s_year").text('20' + data[0]["s_id"].substring(0, 2));
+            $("#s_gpa").text(data[0]["s_gpa"]);
 
-})
-$("#courses").show();
-$("#stu-info").hide();
-$("#settings").hide();
-$("#c").click(function(){
-    $("#course").show();
-    $("#stu-info").hide();
-    $("#settings").hide();
-});
-$("#i").click(function(){
-    $("#course").hide();
-    $("#stu-info").show();
-    $("#settings").hide();
-});
-$("#s").click(function(){
-    $("#course").hide();
-    $("#stu-info").hide();
-    $("#settings").show();
-});
-$('#l').click(function(){
-    window.location.href = '/logout'
-});
+        }
+    });
+
+    $("#c").click(function () {
+        $("#course").show();
+        $("#stu-info").hide();
+        $("#settings").hide();
+    });
+
+    $("#browse-elective").click(function(){
+        window.location.href = 'elective'
+    });
+
+    $("#i").click(function () {
+        $("#course").hide();
+        $("#stu-info").show();
+        $("#settings").hide();
+    });
+    $("#s").click(function () {
+        $("#course").hide();
+        $("#stu-info").hide();
+        $("#settings").show();
+    });
+
+    $('#l').click(function () {
+        window.location.href = '/logout'
+    });
 </script>
 {% endblock %}

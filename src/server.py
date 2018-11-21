@@ -17,7 +17,6 @@ PASSWORD = 'deadoraliveisasecret'
 app = Flask(__name__)
 app.secret_key = 'totally a secret lolz'
 db = pymysql.connect("localhost", "wt2", "pass", "Wt2", charset="latin1")
-cursor = db.cursor()
 
 
 @app.route('/')
@@ -60,31 +59,52 @@ def validate():
 @app.route('/profile')
 def profile():
     '''This function renders the index page of the EventManagement site'''
-
-    return render_template('profile.html', name = "Kaveri")
+    if 's_id' in session:
+        return render_template('profile.html', name = session["s_name"])
+    else:
+        return render_template('index.html')
 
 @app.route('/getCourses')
-def getcourses():
+def getCourses():
     cursor = db.cursor()
-    sql = "SELECT c_id, c_name, sem from course where c_id in (select c_id from s_c_map where s_id = %s)"
-    args = ([session['s_id']])
+    sql = "SELECT c_id, c_name, sem, elective from course where c_id in (select c_id from s_c_map where s_id = %s) and sem=(select max(sem) from course,s_c_map where course.c_id=s_c_map.c_id and s_c_map.s_id=%s);"
+    args = ([session['s_id'], session['s_id']])
     cursor.execute(sql,args)
     desc = cursor.description
-    column_names = [col[0] for col in desc]
-    data = [dict(zip(column_names, row)) for row in cursor.fetchall()]
+    results = cursor.fetchall()
     cursor.close()
+    column_names = [col[0] for col in desc]
+    data = [dict(zip(column_names, row)) for row in results]
     print(data)
     return json.dumps(data)
 
-@app.route('/elective')
-def elective():
-    '''This function renders the index page of the EventManagement site'''
-    print(request.method)
-    return render_template('elective.html')
+@app.route('/getInfo')
+def getInfo():
+    cursor = db.cursor()
+    sql = "SELECT s_id, s_name, s_phone, s_email, (select sum(marks)/(count(marks)*10) from s_c_map where s_id=%s) as s_gpa from student where s_id = %s"
+    args = ([session['s_id'], session['s_id']])
+    cursor.execute(sql,args)
+    desc = cursor.description
+    results = cursor.fetchall()
+    cursor.close()
+    column_names = [col[0] for col in desc]
+    data = [dict(zip(column_names, row)) for row in results]
+    print(data)
+    return json.dumps(data)
 
 @app.route('/logout')
 def logout():
+    session.pop('s_id', None)
+    session.pop('s_name', None)
+    session.clear()
     return render_template('index.html')
+
+@app.route('/elective')
+def elective():
+    if 's_id' in session:
+        return render_template('elective.html', name = session["s_name"])
+    else:
+        return render_template('index.html')
 
 # @app.route('/checkemail',methods = ['POST','GET'])
 # def check_email():
