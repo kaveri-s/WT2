@@ -73,18 +73,6 @@
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="{{ url_for('static',filename = 'js/mdb.min.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('static',filename = 'js/angular.min.js')}}"></script>
-    <script>
-        $("#prof").click(function (ev) {
-            console.log('Prof event fired');
-            window.location.href = '/profile'
-        });
-        $("#log").click(function (ev) {
-            console.log('Logout event fired');
-            ev.preventDefault();
-            ev.stopPropagation();
-            window.location.href = '/logout'
-        });
-    </script>
     {% block script %}{% endblock %}
 </body>
 

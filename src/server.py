@@ -136,14 +136,13 @@ def getElectives():
     details = []
     for x in data:
         details.append(getSubjectDetails(x))
-    # print(details)
+    print('This is being returned by electives: ',details)
     return json.dumps(details)    
 
 def getSubjectDetails(S_Id):
     cursor = db.cursor()
     sql = "SELECT c_id, c_name, sem, pool from course where c_id = %s;"
     cursor.execute(sql,S_Id)
-    desc = cursor.description
     sub = cursor.fetchall()
     sub1 = list(sub[0])
     column_names = ['c_id','c_name','sem','pool','pre-reqs']
@@ -157,9 +156,8 @@ def getSubjectDetails(S_Id):
     # print(data)
     return data
 
-@app.route('/getElectiveNames')
-def getElectiveNames():
-    search_part = request.args.get('coursepart')
+@app.route('/getElectiveNames/<search_part>')
+def getElectiveNames(search_part):
     search_part = search_part+"%";
     column_names = ['c_name'];
     cursor = db.cursor()
@@ -178,7 +176,7 @@ def getElectiveNames():
 @app.route('/getRecommendation')
 def getRecommendation():
     data = reco(session['sem'],session['s_id'])
-    # data = 
+    print(data) 
 
 
 

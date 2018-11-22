@@ -61,8 +61,9 @@ def reco(sem, s_id):
         top_electives=list(top_electives)
         s.extend(top_electives)
     # print(s)
-    p=["c_id"]
-    l = [dict(zip(p,s)) for row in s]
+    l = []
+    for i in s:
+        l.append({'c_id':i})
     print(l)
     return l
 
