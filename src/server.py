@@ -10,6 +10,7 @@ from itsdangerous import URLSafeSerializer, BadSignature
 import pymysql
 import smtplib
 import datetime
+from ml_1 import reco
 
 COMPANY_EMAIL_ADDRESS = 'alivedead068@gmail.com'
 PASSWORD = 'deadoraliveisasecret'
@@ -39,7 +40,7 @@ def validate():
     cursor.execute(sql,args)
     results = cursor.fetchall()
     cursor.close()
-    print(results)
+    # print(results)
     if results:
         row = results[0]
 
@@ -67,7 +68,7 @@ def profile():
 #To retrieve list of courses
 @app.route('/getCourses')
 def getCourses():
-    print(session)
+    # print(session)
     try:
         cursor = db.cursor()
         sql = "SELECT c_id, c_name, sem, elective from course where c_id in (select c_id from s_c_map where s_id = %s) and sem=(select max(sem) from course,s_c_map where course.c_id=s_c_map.c_id and s_c_map.s_id=%s);"
@@ -78,7 +79,9 @@ def getCourses():
         cursor.close()
         column_names = [col[0] for col in desc]
         data = [dict(zip(column_names, row)) for row in results]
-        print(data)
+        # print(data)
+        session['sem'] = 5 
+        print(session['sem'])
         return json.dumps(data)
     except pymysql.InternalError as e:
         print(e)
@@ -88,7 +91,7 @@ def getCourses():
 #To retrieve student info
 @app.route('/getInfo')
 def getInfo():
-    print(session)
+    # print(session)
     try:
         cursor = db.cursor()
         sql = "SELECT s_id, s_name, s_phone, s_email, (select sum(marks)/(count(marks)*10) from s_c_map where s_id=%s) as s_gpa from student where s_id = %s"
@@ -99,7 +102,7 @@ def getInfo():
         cursor.close()
         column_names = [col[0] for col in desc]
         data = [dict(zip(column_names, row)) for row in results]
-        print(data)
+        # print(data)
         return json.dumps(data)
     except pymysql.InternalError as e:
         print(e)
@@ -110,7 +113,7 @@ def getInfo():
 @app.route('/logout')
 def logout():
     if 's_id' in session:
-        session.abandon()
+        session.Abandon()
         return render_template('index.html')
 
 #To display elective page
@@ -133,7 +136,7 @@ def getElectives():
     details = []
     for x in data:
         details.append(getSubjectDetails(x))
-    print(details)
+    # print(details)
     return json.dumps(details)    
 
 def getSubjectDetails(S_Id):
@@ -154,12 +157,43 @@ def getSubjectDetails(S_Id):
     # print(data)
     return data
 
+@app.route('/getElectiveNames')
+def getElectiveNames():
+    search_part = request.args.get('coursepart')
+    search_part = search_part+"%";
+    column_names = ['c_name'];
+    cursor = db.cursor()
+    sql = "SELECT c_name from course where elective = 1 AND c_name LIKE %s;"
+    cursor.execute(sql,search_part)
+    results = cursor.fetchall()
+    cursor.close()
+    # print(results)
+    details = [dict(zip(column_names, row)) for row in results]
+
+    # print(details)
+    return json.dumps(details)   
+
+
+
 @app.route('/getRecommendation')
 def getRecommendation():
-    data = [{'c_id': 'UE15CS401'}, {'c_id': 'UE15CS402'}, {'c_id': 'UE15CS403'},{'c_id': 'UE15CS404'}, {'c_id': 'UE15CS405'}, {'c_id': 'UE15CS406'}]
+    data = reco(session['sem'],session['s_id'])
+    # data = 
+
+
+
+    # data = [{'c_id': 'UE15CS334'}, {'c_id': 'UE15CS335'}, {'c_id': 'UE15CS336'},{'c_id': 'UE15CS344'}, {'c_id': 'UE15CS345'}, {'c_id': 'UE15CS346'}]
     return json.dumps(data)
 
 
 if __name__ == '__main__':
 # run!
     app.run(debug=True)
+
+
+
+
+
+
+
+

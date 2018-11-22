@@ -22,6 +22,7 @@
 </style>
 {% endblock %}
 {% block head %}{% endblock %}
+
 {% block main %}
 <!--To make space on top-->
 <div class="m-5 p-3"></div>
@@ -48,8 +49,10 @@
     <!--Search Bar-->
     <div id="search" class="container mb-5">
         <div class="form-group mb-3 mt-5 mb-5">
-            <input type="text" class="form-control" placeholder="Search">
-            <button class="btn btn-success float-right" type="submit">Go</button>
+            <input type="text" id="search_box" class="form-control" placeholder="Search" onkeyup="obj.getElectiveList()">
+            <div id="suggestions">asdasdadasd</div>
+<!--             <button class="btn btn-success float-right" type="submit">Go</button>
+ -->
         </div>
     </div>
 
@@ -72,6 +75,7 @@
 
 {% endblock %}
 {% block script%}
+<!-- <script type="text/javascript" src="../static/elective.js"></script> -->
 
 <script>
     var cdata;
@@ -92,7 +96,7 @@
                     preq = preq + ',' + cdata[k]["pre-reqs"][j];
 
                 $("#full-list").append('<div id="' + new_id +
-                    '" class="card bg-primary"><div class="card-header text-center">' +
+                    '" class="card bg-primary e_card"><div class="card-header text-center">' +
                     '<p class="card-text">' + cdata[k]["c_name"] +
                     '</p></div><div class="card-body bg-light text-center">' +
                     '<p class="card-text"><b>Subject Code: </b>' + cdata[k]["c_id"] + '</p>' +
@@ -101,8 +105,8 @@
                     '<p class="card-text"><b>Prerequisites: </b>' + preq + '</p></div></div>');
             }
             $.ajax({
-        url: '/getRecommendation',
-        success: function (response) {
+            url: '/getRecommendation',
+            success: function (response) {
             clist = JSON.parse(response);
             $("#e1_reco").html('');
             $("#e2_reco").html('');
@@ -154,6 +158,159 @@
         }
     });
 
+
+
+//Create a constructor function and put all relevant properties and 
+// functions inside it.
+function Suggest() 
+{
+    //:( .. Save "this"
+    othis = this;
+    
+    this.xhr = new XMLHttpRequest(); // object to make the AJAX call
+    
+    //A document.getElementById() NOW will fail. We can do it later
+    this.course = null;
+    this.div = null;
+    this.c_nodes = null;
+    //Define a timer for the "Suggest" functionality
+    this.timer = null;
+    
+    //This function will get called when the user "keys" up. 
+    // We need to decide whether to go to server at all?? Or fetch 
+    // from cache or (do we need to do anything at all????)
+    
+    this.getElectiveList = function()
+    {
+        //If there is a timer already registered, clear that and create a 
+        // new one, 1 second from now (our pause is 1 second)
+        // Else, just create a timer for 1s ( first time keyup)
+        if(this.timer)
+        {
+            clearTimeout(this.timer);
+        }
+
+        //In any case
+        this.timer = setTimeout(this.fetchcourse, 1000);
+    }
+    
+    this.fetchcourse = function()
+    {
+        //Check if the text box (course) is empty.
+        // This can happen if the user has pressed backspace repeatedly
+        // and cleared the text field
+        
+        othis.course = document.getElementById("search_box");
+        othis.div = document.getElementById("suggestions");
+        if(othis.course.value == "")
+        {
+            //There is nothing to do
+            othis.div.innerHTML = "";
+            othis.div.style.display = "none";
+            othis.c_nodes = document.getElementById("full-list").children;
+            for (i = 0; i < othis.c_nodes.length; i++) {
+            othis.c_nodes[i].classList.remove("d-none");
+            }
+        
+            return;
+        }
+        
+        // Else we have two choices. One, we can check in our cache.
+        // If we had previously searched for this coursepart, we will find it
+        // in our cache. We load it from there. Else, we have no option 
+        // but to go to the server
+        else
+        {
+            urlstr = "/getElectiveNames?coursepart=" + othis.course.value;
+            if(localStorage[urlstr])
+            {
+                othis.fillcourses(JSON.parse(localStorage[urlstr]));
+            }
+            else
+            {
+                //Now we have to go to the server
+                othis.xhr.onreadystatechange = othis.populatecourses;
+                
+                // Open a GET connection
+                othis.xhr.open("GET", "/getElectiveNames?coursepart=" + othis.course.value, true);
+                
+                othis.xhr.send();
+    
+            }
+        }
+    }
+    
+    this.populatecourses = function()
+    {
+        if(this.readyState == 4 && this.status == 200)
+        {
+            courses = JSON.parse(this.responseText);
+            
+            //Maybe there were no suggestions.
+            if(courses.length == 0)
+            {
+                // othis.course.className = "notfound";
+                othis.div.style.display = "none";
+            }
+            else//there are some suggestions
+            {
+                // othis.course.className = "found";
+                
+                //Add it to the browser cache. We will use localStorage
+                localStorage[this.responseURL] = this.responseText;
+                
+                othis.fillcourses(courses);
+            }
+        }
+    }
+    
+    this.fillcourses = function(courses)
+    {
+        othis.div.innerHTML = "";
+        for(i=0;i<courses.length;i++)
+        {
+            newdiv = document.createElement("div");
+            newdiv.innerHTML = courses[i]['c_name'];
+            // newdiv.className = "suggest";
+            othis.div.appendChild(newdiv);
+            
+            //Now we need to register the event where the div is "Selected"
+            // We use "onclick"
+            newdiv.onclick = othis.setcourse;
+        }
+        othis.div.style.display = "block";
+        othis.div.classList.add('container', 'bg-light');
+
+    }
+    
+    //Function to set the selected value inside the textbox
+    // After setting the value, clear the "div" container
+    
+    this.setcourse = function(event)
+    {
+        othis.course.value = event.target.innerHTML;
+        var ip = othis.course.value.replace(" ","-");
+
+        //Clear the div
+        othis.div.innerHTML = "";
+        othis.div.style.display = "none";
+
+        othis.c_nodes = document.getElementById("full-list").children;
+        for (i = 0; i < othis.c_nodes.length; i++) {
+            othis.c_nodes[i].classList.add("d-none");
+        }
+        // document.getElementsByClassName("e_card").style.visibility = "none";
+        document.getElementById(ip).classList.remove("d-none");
+
+    }
+}
+
+//Create the object using the constructor
+obj = new Suggest();
     
 </script>
 {% endblock %}
+
+
+
+
