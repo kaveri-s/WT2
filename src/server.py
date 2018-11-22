@@ -40,7 +40,7 @@ def validate():
     cursor.execute(sql,args)
     results = cursor.fetchall()
     cursor.close()
-    # print(results)
+    print(results)
     if results:
         row = results[0]
 
@@ -80,7 +80,7 @@ def getCourses():
         column_names = [col[0] for col in desc]
         data = [dict(zip(column_names, row)) for row in results]
         # print(data)
-        session['sem'] = 5 
+        session['sem'] = data[0]['sem']-1 
         print(session['sem'])
         return json.dumps(data)
     except pymysql.InternalError as e:
@@ -113,7 +113,7 @@ def getInfo():
 @app.route('/logout')
 def logout():
     if 's_id' in session:
-        session.Abandon()
+        session.pop('s_id')
         return render_template('index.html')
 
 #To display elective page

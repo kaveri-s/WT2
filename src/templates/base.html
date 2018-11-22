@@ -40,7 +40,7 @@
                         aria-haspopup="true" aria-expanded="false" type="button" onclick=>Hi, {{name}}!</button>
                     <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
                         <a id="#prof" class="dropdown-item" href="/profile">Profile</a>
-                        <a id="#log" class="dropdown-item" href="/">Log Out</a>
+                        <a id="#log" class="dropdown-item" href="/logout">Log Out</a>
                     </div>
                 </div>
             </div>
@@ -80,6 +80,8 @@
         });
         $("#log").click(function (ev) {
             console.log('Logout event fired');
+            ev.preventDefault();
+            ev.stopPropagation();
             window.location.href = '/logout'
         });
     </script>
